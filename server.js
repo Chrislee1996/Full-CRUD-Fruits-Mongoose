@@ -52,6 +52,7 @@ app.get('/fruits/seed', (req, res)=> {
           //then we create with our seed data
           Fruit.create(startFruits)
             .then(data => {
+                console.log('this is what create returns', data)
                 res.send(data)
             })
 
@@ -60,6 +61,22 @@ app.get('/fruits/seed', (req, res)=> {
     //then we can send if we want to see that data
 })
 
+
+//index route
+app.get('/fruits', (req, res)=> {
+    //find the fruits
+    Fruit.find({})
+        .then(data =>{
+            console.log(data)
+            res.render('fruits/index.liquid', { data })
+        })
+        .catch(error => {
+            console.log(error)
+            res.json({ error })
+        })
+    //then render a template AFTER they are found 
+    //show an error if there is one 
+})
 
 ////////////////////////////////////////
 //Server listener
