@@ -65,6 +65,9 @@ router.post('/login', async (req, res) => {
                     // store some properties in the session
                     req.session.username = username
                     req.session.loggedIn = true
+                    req.session.userId = user.id
+
+                    // console.log('session user id', req.session.userId)
                     // redirect to /fruits if login is successful
                     res.redirect('/fruits')
                 } else {
