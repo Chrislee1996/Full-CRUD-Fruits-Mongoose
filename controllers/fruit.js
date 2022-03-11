@@ -35,8 +35,10 @@ router.get('/', (req, res) => {
 	Fruit.find({})
 		// then render a template AFTER they're found
 		.then((fruits) => {
+			const username = req.session.username
+			const loggedIn = req.session.loggedIn
 			// console.log(fruits)
-			res.render('fruits/index', { fruits })
+			res.render('fruits/index', { fruits, username, loggedIn })
 		})
 		// show an error if there is one
 		.catch((error) => {
@@ -52,7 +54,10 @@ router.get('/mine', (req, res) => {
 		// then render a template AFTER they're found
 		.then((fruits) => {
 			// console.log(fruits)
-			res.render('fruits/index', { fruits })
+			const username = req.session.username
+			const loggedIn = req.session.loggedIn
+
+			res.render('fruits/index', { fruits, username, loggedIn })
 		})
 		// show an error if there is one
 		.catch((error) => {
@@ -63,7 +68,9 @@ router.get('/mine', (req, res) => {
 
 // new route -> GET route that renders our page with the form
 router.get('/new', (req, res) => {
-	res.render('fruits/new')
+	const username = req.session.username
+	const loggedIn = req.session.loggedIn
+	res.render('fruits/new', { username, loggedIn })
 })
 
 // create -> POST route that actually calls the db and makes a new document
@@ -96,7 +103,10 @@ router.get('/:id/edit', (req, res) => {
 	Fruit.findById(fruitId)
 		// -->render if there is a fruit
 		.then((fruit) => {
-			res.render('fruits/edit', { fruit })
+			console.log('edit froot', fruit)
+			const username = req.session.username
+			const loggedIn = req.session.loggedIn
+			res.render('fruits/edit', { fruit, username, loggedIn })
 		})
 		// -->error if no fruit
 		.catch((err) => {
@@ -131,7 +141,10 @@ router.get('/:id', (req, res) => {
 	Fruit.findById(fruitId)
 		// once found, we can render a view with the data
 		.then((fruit) => {
-			res.render('fruits/show', { fruit })
+			const username = req.session.username
+			const loggedIn = req.session.loggedIn
+
+			res.render('fruits/show', { fruit, username, loggedIn })
 		})
 		// if there is an error, show that instead
 		.catch((err) => {
